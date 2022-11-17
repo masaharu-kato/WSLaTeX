@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 using Office = Microsoft.Office.Core;
+using WSLatexCUI;
 
 namespace WSLatexPPT
 {
@@ -26,11 +27,12 @@ namespace WSLatexPPT
 
         private void button1_Click(object sender, EventArgs e)
         {
-            PowerPoint.Slide cslide = Globals.ThisAddIn.Application.ActiveWindow.View.Slide;
-            PowerPoint.Shape textBox = cslide.Shapes.AddTextbox(
-                Office.MsoTextOrientation.msoTextOrientationHorizontal,
-                0, 0, 480, 320);
-            textBox.TextFrame.TextRange.InsertAfter(textBox1.Text);
+            //PowerPoint.Slide cslide = Globals.ThisAddIn.Application.ActiveWindow.View.Slide;
+            //PowerPoint.Shape textBox = cslide.Shapes.AddTextbox(
+            //    Office.MsoTextOrientation.msoTextOrientationHorizontal,
+            //    0, 0, 480, 320);
+            //textBox.TextFrame.TextRange.InsertAfter(textBox1.Text);
+            WSLatexCUI.RunLatex.GenerateSVGFromTexContent(textBox1.Text);
             textBox1.Text = "";
         }
     }

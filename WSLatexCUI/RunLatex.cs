@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WSLatexCUI
 {
-    internal class RunLatex
+    public class RunLatex
     {
         static string SaveTexToFile(string content)
         {
