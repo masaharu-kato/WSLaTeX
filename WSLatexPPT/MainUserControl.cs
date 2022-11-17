@@ -8,15 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
-using Office = Microsoft.Office.Core;
 using WSLatexCUI;
 using System.Diagnostics;
 using System.Reflection.Emit;
+using Microsoft.Office.Core;
 
 namespace WSLatexPPT
 {
     public partial class MainUserControl : UserControl
     {
+        float last_posx = 0;
+        float last_posy = 0;
+        float last_sizex = 0;
+        float last_sizey = 0;
+        
         public MainUserControl()
         {
             var logFile = new System.IO.StreamWriter("output.log.txt");
@@ -35,10 +40,12 @@ namespace WSLatexPPT
             //    Office.MsoTextOrientation.msoTextOrientationHorizontal,
             //    0, 0, 480, 320);
             //textBox.TextFrame.TextRange.InsertAfter(textBox1.Text);
+            PowerPoint.Application app;
+            PowerPoint.DocumentWindow window;
             PowerPoint.Slide cslide;
             try { 
-                var app = Globals.ThisAddIn.Application;
-                var window = app.ActiveWindow;
+                app = Globals.ThisAddIn.Application;
+                window = app.ActiveWindow;
                 cslide = window.View.Slide;
                 if(cslide == null) throw new Exception("Current slide is empty.");
             }
@@ -56,14 +63,25 @@ namespace WSLatexPPT
             }
             else
             {
+                var posx = last_posx;
+                var posy = last_posy + last_sizey * 1.2f;
+                try {
+                    var range = window.Selection.ShapeRange;
+                    posx = range.Left;
+                    posy = range.Top + range.Height * 1.2f;
+                }
+                catch {}
                 label1.Text = "";
-                cslide.Shapes.AddPicture(
+                var shape = cslide.Shapes.AddPicture(
                     outPath,
-                    Office.MsoTriState.msoFalse,
-                    Office.MsoTriState.msoTrue,
-                    0 /* window.Selection.ShapeRange.Left */,
-                    0 /* window.Selection.ShapeRange.Top */
+                    MsoTriState.msoFalse, MsoTriState.msoTrue,
+                    posx, posy
                 );
+                shape.ScaleHeight(2.0f, MsoTriState.msoTrue);
+                shape.Select();
+
+                last_posx = posx; last_posy = posy;
+                last_sizex = shape.Width; last_sizey = shape.Height;
             }
             RunLatex.ClearTempFiles();
             Enabled = true;
