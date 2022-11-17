@@ -31,15 +31,24 @@ namespace WSLatexPPT
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Enabled = false;
             //PowerPoint.Shape textBox = cslide.Shapes.AddTextbox(
             //    Office.MsoTextOrientation.msoTextOrientationHorizontal,
             //    0, 0, 480, 320);
             //textBox.TextFrame.TextRange.InsertAfter(textBox1.Text);
-            var app = Globals.ThisAddIn.Application;
-            var window = app.ActiveWindow;
-            PowerPoint.Slide cslide = window.View.Slide;
+            PowerPoint.Slide cslide;
+            try { 
+                var app = Globals.ThisAddIn.Application;
+                var window = app.ActiveWindow;
+                cslide = window.View.Slide;
+                if(cslide == null) throw new Exception("Current slide is empty.");
+            }
+            catch
+            {
+                label1.Text = "Please select a slide.";
+                return;
+            }
 
+            Enabled = false;
             var outPath = RunLatex.GenerateSVGFromTexContent(textBox1.Text);
             if(outPath == null)
             {
@@ -62,7 +71,7 @@ namespace WSLatexPPT
 
         private void label1_Click(object sender, EventArgs e)
         {
-
+            label1.Text = "";
         }
     }
 }
