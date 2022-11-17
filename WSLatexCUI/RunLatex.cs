@@ -1,14 +1,26 @@
-﻿using System.IO;
+﻿using System;
+using System.ComponentModel;
+using System.IO;
 
 namespace WSLatexCUI
 {
     public class RunLatex
     {
+        static string tempDir = 
+            Environment.ExpandEnvironmentVariables("%USERPROFILE%\\.temp.wslatex");
+
+        static public void Prepare()
+        {
+            Directory.CreateDirectory(tempDir);
+            var logFile = new StreamWriter($"{tempDir}\\wslatex.output.log");
+            Console.SetOut(logFile);
+        }
+
         static string SaveTexToFile(string content)
         {
             string filename = "temp"; // TODO: Implement
-            File.WriteAllText($"{filename}.tex", content);
-            return "temp";
+            File.WriteAllText($"{tempDir}\\{filename}.tex", content);
+            return filename;
         }
         
         static void GenerateDVIFromTex(string filename)
@@ -27,14 +39,16 @@ namespace WSLatexCUI
 
         static public void GenerateSVGFromTex(string filename)
         {
+            Environment.CurrentDirectory = tempDir;
             GenerateDVIFromTex(filename);
             GenerateSVGFromDVI(filename);
         }
 
-        static public void GenerateSVGFromTexContent(string content)
+        static public string GenerateSVGFromTexContent(string content)
         {
             string filename = SaveTexToFile(content);
             GenerateSVGFromTex(filename);
+            return $"{tempDir}\\{filename}.svg";
         }
     }
 }

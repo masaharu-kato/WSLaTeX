@@ -34,19 +34,21 @@
             // 
             // textBox1
             // 
-            this.textBox1.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(20, 20);
+            this.textBox1.Font = new System.Drawing.Font("Consolas", 9F);
+            this.textBox1.Location = new System.Drawing.Point(10, 10);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(360, 440);
+            this.textBox1.Size = new System.Drawing.Size(300, 520);
             this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "\\documentclass{article}\r\n\\usepackage{amsmath}\r\n\\pagestyle{empty}\r\n\\begin{document" +
+    "}\r\n\r\n\r\n\r\n\\end{document}";
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Yu Gothic UI", 12F);
-            this.button1.Location = new System.Drawing.Point(20, 480);
+            this.button1.Location = new System.Drawing.Point(10, 550);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(360, 60);
+            this.button1.Size = new System.Drawing.Size(300, 60);
             this.button1.TabIndex = 1;
             this.button1.Text = "Insert";
             this.button1.UseVisualStyleBackColor = true;
@@ -59,7 +61,7 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Name = "MainUserControl";
-            this.Size = new System.Drawing.Size(400, 600);
+            this.Size = new System.Drawing.Size(320, 640);
             this.Load += new System.EventHandler(this.MainUserControl_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
