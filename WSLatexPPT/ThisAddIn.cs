@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
-using Office = Microsoft.Office.Core;
+using Microsoft.Office.Core;
 using System.Windows.Forms;
 using WSLatexCUI;
 
@@ -12,11 +12,12 @@ namespace WSLatexPPT
 {
     public partial class ThisAddIn
     {
+        public Microsoft.Office.Tools.CustomTaskPane pane;
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
-            WSLatexCUI.RunLatex.Prepare();
+            RunLatex.Prepare();
             var mainUserControl = new MainUserControl();
-            var pane = CustomTaskPanes.Add(mainUserControl, "Insert LaTex");
+            this.pane = CustomTaskPanes.Add(mainUserControl, "WSLaTex");
             pane.Width = 320;
             pane.Visible = true;
         }
