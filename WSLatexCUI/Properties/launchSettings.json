@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "WSLatexCUI": {
-      "commandName": "Project",
-      "commandLineArgs": "sample",
-      "workingDirectory": "C:\\Users\\kato\\source\\repos\\WSLatex\\WSLatexCUI\\res"
-    }
-  }
-}

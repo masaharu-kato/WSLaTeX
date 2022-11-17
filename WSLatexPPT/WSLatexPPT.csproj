@@ -199,7 +199,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WSLatexCUI\WSLatexCUI.csproj">
-      <Project>{d998b352-09e6-43af-af41-f882fe52f80f}</Project>
+      <Project>{4d2b2296-3f71-4295-84f9-5278fc477624}</Project>
       <Name>WSLatexCUI</Name>
     </ProjectReference>
   </ItemGroup>

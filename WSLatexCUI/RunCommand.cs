@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace WSLatexCUI
 {
@@ -15,7 +16,7 @@ namespace WSLatexCUI
             psInfo.UseShellExecute = false;
             psInfo.RedirectStandardOutput = true;
 
-            Process? p = Process.Start(psInfo);
+            var p = Process.Start(psInfo);
             if (p == null) throw new Exception("Failed to start command.");
             p.OutputDataReceived += (sender, e) => { Console.WriteLine(e.Data); };
             p.Start();
