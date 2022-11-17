@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace WSLatexCUI
 {
-    internal class RunCommand
+    public class RunCommand
     {
         static public void Run(string appName, string args)
         {

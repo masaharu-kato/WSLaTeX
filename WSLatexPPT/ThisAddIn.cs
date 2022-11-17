@@ -7,6 +7,7 @@ using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 using Microsoft.Office.Core;
 using System.Windows.Forms;
 using WSLatexCUI;
+using System.IO;
 
 namespace WSLatexPPT
 {

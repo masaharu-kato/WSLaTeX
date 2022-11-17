@@ -7,7 +7,8 @@ namespace WSLatexCUI // Note: actual namespace depends on the project name.
     {
         static void Main(string[] args)
         {
-            RunLatex.GenerateSVGFromTex(args[0]);
+            RunLatex.Prepare(args[0]);
+            RunLatex.GenerateSVGFromTex();
         }
     }
 }

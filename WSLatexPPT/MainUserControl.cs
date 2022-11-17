@@ -11,6 +11,7 @@ using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 using Office = Microsoft.Office.Core;
 using WSLatexCUI;
 using System.Diagnostics;
+using System.Reflection.Emit;
 
 namespace WSLatexPPT
 {
@@ -35,19 +36,33 @@ namespace WSLatexPPT
             //    Office.MsoTextOrientation.msoTextOrientationHorizontal,
             //    0, 0, 480, 320);
             //textBox.TextFrame.TextRange.InsertAfter(textBox1.Text);
-            var outPath = WSLatexCUI.RunLatex.GenerateSVGFromTexContent(textBox1.Text);
             var app = Globals.ThisAddIn.Application;
             var window = app.ActiveWindow;
             PowerPoint.Slide cslide = window.View.Slide;
-            cslide.Shapes.AddPicture(
-                outPath,
-                Office.MsoTriState.msoFalse,
-                Office.MsoTriState.msoTrue,
-                0 /* window.Selection.ShapeRange.Left */,
-                0 /* window.Selection.ShapeRange.Top */
-            );
-            //textBox1.Text = "";
+
+            var outPath = RunLatex.GenerateSVGFromTexContent(textBox1.Text);
+            if(outPath == null)
+            {
+                label1.Text = "Failed to process.";
+            }
+            else
+            {
+                label1.Text = "";
+                cslide.Shapes.AddPicture(
+                    outPath,
+                    Office.MsoTriState.msoFalse,
+                    Office.MsoTriState.msoTrue,
+                    0 /* window.Selection.ShapeRange.Left */,
+                    0 /* window.Selection.ShapeRange.Top */
+                );
+            }
+            RunLatex.ClearTempFiles();
             Enabled = true;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

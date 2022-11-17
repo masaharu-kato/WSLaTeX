@@ -8,47 +8,58 @@ namespace WSLatexCUI
     {
         static string tempDir = 
             Environment.ExpandEnvironmentVariables("%USERPROFILE%\\.temp.wslatex");
+        static string tempName = "temp";
 
-        static public void Prepare()
+        static public void Prepare(string _tempName = null)
         {
+            if (_tempName != null) tempName = _tempName;
             Directory.CreateDirectory(tempDir);
             var logFile = new StreamWriter($"{tempDir}\\wslatex.output.log");
             Console.SetOut(logFile);
         }
 
-        static string SaveTexToFile(string content)
+        static void SaveTexToFile(string content)
         {
-            string filename = "temp"; // TODO: Implement
-            File.WriteAllText($"{tempDir}\\{filename}.tex", content);
-            return filename;
+            File.WriteAllText($"{tempDir}\\{tempName}.tex", content);
         }
         
-        static void GenerateDVIFromTex(string filename)
+        static void GenerateDVIFromTex()
         {
             RunCommand.RunOnWSL(
                 "pdflatex",
-                $"-output-format dvi -shell-escape -interaction=batchmode {filename}.tex");
+                $"-output-format dvi -shell-escape -interaction=batchmode {tempName}.tex");
         }
 
-        static void GenerateSVGFromDVI(string filename)
+        static void GenerateSVGFromDVI()
         {
             RunCommand.RunOnWSL(
                 "dvisvgm", 
-                $"--no-fonts -o {filename}.svg {filename}.dvi");
+                $"--no-fonts -o {tempName}.svg {tempName}.dvi");
         }
 
-        static public void GenerateSVGFromTex(string filename)
+        static public void GenerateSVGFromTex()
         {
             Environment.CurrentDirectory = tempDir;
-            GenerateDVIFromTex(filename);
-            GenerateSVGFromDVI(filename);
+            GenerateDVIFromTex();
+            GenerateSVGFromDVI();
         }
 
         static public string GenerateSVGFromTexContent(string content)
         {
-            string filename = SaveTexToFile(content);
-            GenerateSVGFromTex(filename);
-            return $"{tempDir}\\{filename}.svg";
+            SaveTexToFile(content);
+            GenerateSVGFromTex();
+            string outPath = $"{tempDir}\\{tempName}.svg";
+            if (File.Exists(outPath)) return outPath;
+            return null;
+        }
+
+        static public void ClearTempFiles()
+        {
+            System.IO.File.Delete($"{tempDir}\\{tempName}.aux");
+            System.IO.File.Delete($"{tempDir}\\{tempName}.dvi");
+            System.IO.File.Delete($"{tempDir}\\{tempName}.log");
+            System.IO.File.Delete($"{tempDir}\\{tempName}.svg");
+            System.IO.File.Delete($"{tempDir}\\{tempName}.tex");
         }
     }
 }
