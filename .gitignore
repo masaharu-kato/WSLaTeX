@@ -399,3 +399,6 @@ FodyWeavers.xsd
 
 # Resource folder
 res/
+
+# Temporary folder
+temp/
