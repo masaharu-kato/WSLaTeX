@@ -19,7 +19,7 @@ namespace WSLatexPPT
             RunLatex.Prepare();
             var mainUserControl = new MainUserControl();
             this.pane = CustomTaskPanes.Add(mainUserControl, "WSLaTex");
-            pane.Width = 320;
+            pane.Width = 330;
             pane.Visible = true;
         }
 
