@@ -1,7 +1,7 @@
-# WSLaTexPPT
+# WSLaTex
 
 
-## Abstract
+## What's this?
 
 The PowerPoint add-in to insert a TeX as vector image on your slides, by using LaTex installed on WSL. 
 
