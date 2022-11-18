@@ -24,8 +24,6 @@ namespace WSLatexPPT
         
         public MainUserControl()
         {
-            var logFile = new System.IO.StreamWriter("output.log.txt");
-            Console.SetOut(logFile);
             InitializeComponent();
         }
 

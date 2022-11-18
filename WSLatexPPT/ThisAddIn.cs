@@ -17,10 +17,15 @@ namespace WSLatexPPT
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             RunLatex.Prepare();
-            var mainUserControl = new MainUserControl();
-            this.pane = CustomTaskPanes.Add(mainUserControl, "WSLaTex");
-            pane.Width = 330;
-            pane.Visible = true;
+            try {
+                var mainUserControl = new MainUserControl();
+                this.pane = CustomTaskPanes.Add(mainUserControl, "WSLaTex");
+                pane.Width = 330;
+                pane.Visible = true;
+            } catch(Exception err) { 
+                MessageBox.Show(err.Message);
+                Console.WriteLine("Failed to add pane.");
+            }
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
