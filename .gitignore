@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Resource folder
+res/
+
+# Temporary folder
+temp/
